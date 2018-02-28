@@ -11,70 +11,156 @@
 |
 */
 
-Route::get('/', function () {
-    return view('admin.home');
+Route::get('/',[
+    'uses'=>'AuthController@getLogin',
+    'as'=>'/'
+]);
+
+Route::get('/login',[
+    'uses'=>'AuthController@getLogin',
+    'as'=>'login'
+]);
+
+Route::post('/login',[
+    'uses'=>'AuthController@postLogin',
+    'as'=>'login'
+]);
+
+Route::group(['middleware'=>'role:Admin'],function (){
+    Route::get('/register',[
+        'uses'=>'AuthController@getRegister',
+        'as'=>'register'
+    ]);
+    Route::post('/register',[
+        'uses'=>'AuthController@postRegister',
+        'as'=>'register'
+    ]);
+    Route::get('/employees',[
+        'uses'=>'HomeController@getEmployees',
+        'as'=>'employees'
+    ]);
+    Route::post('/updateUserRole',[
+        'uses'=>'HomeController@postUpdateUserRole',
+        'as'=>'updateUserRole'
+    ]);
+    Route::post('/removeUser',[
+        'uses'=>'HomeController@removeUser',
+        'as'=>'removeUser'
+    ]);
+    Route::post('/changePassword',[
+        'uses'=>'HomeController@changePassword',
+        'as'=>'changePassword'
+    ]);
 });
 
-Route::get('/admin', function () {
-    return view('admin.home');
+Route::group(['middleware'=>'auth'],function (){
+    Route::get('/detail/{id}',[
+        'uses'=>'OrderController@getDetail',
+        'as'=>'detail'
+    ]);
+    Route::get('/print/{id}',[
+        'uses'=>'OrderController@getPrint',
+        'as'=>'print'
+    ]);
+    Route::get('/searchByDate',[
+        'uses'=>'OrderController@getSearchByDate',
+        'as'=>'searchByDate'
+    ]);
+    Route::get('/report',[
+        'uses'=>'OrderController@report',
+        'as'=>'report'
+    ]);
+    Route::post('/checkout',[
+        'uses'=>'CartController@postCustomer',
+        'as'=>'checkout'
+    ]);
+    Route::post('/payment',[
+        'uses'=>'CartController@postPayment',
+        'as'=>'payment'
+    ]);
+    Route::get('/increaseCart/{id}',[
+        'uses'=>'CartController@increaseCart',
+        'as'=>'increaseCart'
+    ]);
+    Route::get('/decreaseCart/{id}',[
+        'uses'=>'CartController@decreaseCart',
+        'as'=>'decreaseCart'
+    ]);
+    Route::get('/removeItem/{id}',[
+        'uses'=>'CartController@getRemoveItem',
+        'as'=>'removeItem'
+    ]);
+    Route::post('/addToCart',[
+        'uses'=>'CartController@addToCart',
+        'as'=>'addToCart'
+    ]);
+    Route::get('/sale',[
+        'uses'=>'CartController@getSale',
+        'as'=>'sale'
+    ]);
+    Route::get('/editProduct/{id}',[
+        'uses'=>'ProductController@editProduct',
+        'as'=>'editProduct'
+    ]);
+    Route::post('/postEditProduct',[
+        'uses'=>'ProductController@postEditProduct',
+        'as'=>'postEditProduct'
+    ]);
+    Route::get('/deleteProduct',[
+        'uses'=>'ProductController@deleteProduct',
+        'as'=>'deleteProduct'
+    ]);
+    Route::post('/getBarcode',[
+        'uses'=>'ProductController@getBarcode',
+        'as'=>'getBarcode'
+    ]);
+    Route::get('/showProduct',[
+        'uses'=>'ProductController@showProduct',
+        'as'=>'showProduct'
+    ]);
+    Route::post('/newProduct',[
+        'uses'=>'ProductController@postNewProduct',
+        'as'=>'newProduct'
+    ]);
+    Route::get('/getNewProduct',[
+        'uses'=>'ProductController@getNewProduct',
+        'as'=>'getNewProduct'
+    ]);
+    Route::get('/delCategory',[
+        'uses'=>'ProductController@deleteCategory',
+        'as'=>'delCategory'
+    ]);
+    Route::post('/newCategory',[
+        'uses'=>'ProductController@newCategory',
+        'as'=>'newCategory'
+    ]);
+    Route::get('/getCategory',[
+        'uses'=>'ProductController@getCategory',
+        'as'=>'getCategory'
+    ]);
+    Route::post('/imageUpload',[
+        'uses'=>'HomeController@postUserImage',
+        'as'=>'imageUpload'
+    ]);
+    Route::get('/userImage/{file_name}',[
+        'uses'=>'HomeController@getUserImage',
+        'as'=>'userImage'
+    ]);
+    Route::get('/profile',[
+        'uses'=>'HomeController@getProfile',
+        'as'=>'profile'
+    ]);
+    Route::get('/error',[
+        'uses'=>'AuthController@getError',
+        'as'=>'error'
+    ]);
+    Route::get('/dashboard',[
+        'uses'=>'HomeController@getDashboard',
+        'as'=>'dashboard'
+    ]);
+    Route::get('/logout',[
+        'uses'=>'AuthController@getLogout',
+        'as'=>'logout'
+    ]);
 });
 
-Route::get('/login', function () {
-    return view('admin.auth.login');
-});
-
-Route::get('/charts', function () {
-    return View::make('admin.charts');
-});
-
-Route::get('/tables', function () {
-    return View::make('admin.table');
-});
-
-Route::get('/forms', function () {
-    return View::make('admin.form');
-});
-
-Route::get('/grid', function () {
-    return View::make('admin.grid');
-});
-
-Route::get('/buttons', function () {
-    return View::make('admin.buttons');
-});
-
-Route::get('/icons', function () {
-    return View::make('admin.icons');
-});
-
-Route::get('/panels', function () {
-    return View::make('admin.panel');
-});
-
-Route::get('/typography', function () {
-    return View::make('admin.typography');
-});
-
-Route::get('/notifications', function () {
-    return View::make('admin.notifications');
-});
-
-Route::get('/blank', function () {
-    return View::make('admin.blank');
-});
-
-Route::get('/documentation', function () {
-    return View::make('admin.documentation');
-});
-
-Route::get('/stats', function() {
-   return View::make('admin.stats');
-});
-
-Route::get('/progressbars', function() {
-    return View::make('admin.progressbars');
-});
-
-Route::get('/collapse', function() {
-    return View::make('admin.collapse');
-});

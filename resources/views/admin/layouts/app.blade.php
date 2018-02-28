@@ -6,11 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'SB Admin 2 | cham11ng') }}</title>
+    <title>@yield('title')</title>
 
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <link rel="stylesheet" href="{{ asset('css/timeline.css') }}">
+    <link rel="stylesheet" href="{{asset('css/datatable.css')}}">
 
     <!-- Scripts -->
     <script>
@@ -21,10 +22,13 @@
 
 </head>
 <body>
-@yield('body')
+@yield('content')
 
 <script src="{{ asset("js/app.js") }}"></script>
 <script src="{{ asset("js/Chart.js") }}"></script>
 <script src="{{ asset("js/admin.js") }}"></script>
+
+<script src="{{asset("js/datatable.js")}}"></script>
+<script src="{{asset("js/a.js")}}"></script>
 </body>
 </html>

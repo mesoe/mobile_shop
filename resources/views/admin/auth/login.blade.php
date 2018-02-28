@@ -1,22 +1,24 @@
 @extends ('admin.layouts.app')
-@section ('body')
+@section('title') Login Page @stop
+@section ('content')
     <div class="container">
         <div class="row" style="margin-top: 100px;">
             <div class="col-md-4 col-md-offset-4">
-                @component('admin.widgets.panel')
+                @if(Session('err'))<div class="alert alert-danger">{{Session('err')}}</div> @endif
+            @component('admin.widgets.panel')
                     @slot ('panelTitle', 'Please Sign In')
                     @slot ('panelBody')
-                        <form class="form-horizontal" role="form" method="POST" action="#">
-                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                        <form class="form-horizontal" role="form" method="POST" action="{{route('login')}}">
+                            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                 <div class="col-md-12">
-                                    <label for="email" class="control-label">Username</label>
+                                    <label for="name" class="control-label">Username</label>
 
-                                    <input id="email" type="email" class="form-control" name="email"
-                                           value="{{ old('email') }}" required autofocus>
+                                    <input id="name" type="text" class="form-control" name="name"
+                                           value="{{ old('name') }}" required autofocus>
 
-                                    @if ($errors->has('email'))
+                                    @if ($errors->has('name'))
                                         <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('name') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -58,6 +60,7 @@
                                     </a>
                                 </div>
                             </div>
+                            {{csrf_field()}}
                         </form>
                     @endslot
                 @endcomponent
